@@ -1,0 +1,34 @@
+import { createSlice } from "@reduxjs/toolkit";
+// import {accountApi} from "../api/Account";
+import { useEffect } from "react";
+import { Auth } from "@/api/Auth";
+
+const slice = createSlice({
+  name: "user",
+  initialState: {
+    user: null,
+  },
+  reducers: {
+    fetchUser(state, action) {
+      state.user = action.payload;
+      // console.log('user changes', action.payload)
+    },
+
+    updateUserDetails(state, action) {
+      state.user = action.payload;
+      // console.log('user changes', action.payload)
+    },
+  },
+});
+
+//user actions
+export const fetchUser = (user) => async (dispatch) => {
+  dispatch(slice.actions.fetchUser(user));
+};
+
+export const updateUserDetails = (values, imageFile, imageChanged) => async (dispatch) => {
+  const data = await Auth.updateDetails(values, imageFile, imageChanged);
+  dispatch(slice.actions.updateUserDetails(data));
+};
+
+export const { reducer } = slice;
